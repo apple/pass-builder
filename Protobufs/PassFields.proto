@@ -1,0 +1,51 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "PassFieldsList.proto";
+import "PassFieldsTemplateCustomization.proto";
+import "PassTransitType.proto";
+
+option swift_prefix = "PB";
+
+// A message that represents the groups of fields that display information on the front and back of a pass.
+message PassFields {
+    // Customize fields in a pkpasstemplate.
+    // If a corresponding field list (e.g. header_fields) is explicitly set, any customizations for fields will be
+    // discarded in favor of the explicit definition.
+    PassFieldsTemplateCustomization field_customization = 1;
+
+    // An object that represents the fields that display information at the top of a pass.
+    optional PassFieldsList header_fields = 2;
+
+    // An object that represents the fields that display the most important information on a pass.
+    optional PassFieldsList primary_fields = 3;
+
+    // An object that represents the fields that display supporting information on the front of a pass.
+    optional PassFieldsList secondary_fields = 4;
+
+    // An object that represents the fields that display additional information on the front of a pass.
+    optional PassFieldsList auxiliary_fields = 5;
+
+    // An object that represents the fields that display information on the back of a pass.
+    optional PassFieldsList back_fields = 6;
+
+    // An object that represents fields that display in the Additional Info section below a pass.
+    optional PassFieldsList additional_info_fields = 7;
+
+    // (Required when Boarding Pass) The type of transit for a boarding pass. This key is invalid for other types
+    // of passes. The system may use the value to display more information, such as showing an airplane icon for
+    // the pass on watchOS when the value is set to `PKTransitTypeAir`.
+    optional PassTransitType transit_type = 8;
+
+    // An object that represents fields that display in the footer of a pass face.
+    optional PassFieldsList footer_fields = 9;
+}

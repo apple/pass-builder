@@ -1,0 +1,78 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "PassDataDetectorType.proto";
+import "PassDateTimeFormat.proto";
+import "PassFieldValue.proto";
+import "PassNumberFormat.proto";
+import "PassTextAlignment.proto";
+
+option swift_prefix = "PB";
+
+// A message that represents the information to display in a field on a pass.
+message PassFieldContent {
+    // (Required) A unique key that identifies a field in the pass; for example, “departure-gate”.
+    string key = 1;
+
+    // (Required) The value to use for the field; for example, 42. A date or time value needs to include a
+    // time zone.
+    PassFieldValue value = 2;
+
+    // The text for a field label.
+    optional string label = 3;
+
+    // The value of the field, including HTML markup for links. The only supported tag is the <a> tag and its href
+    // attribute. The value of this key overrides that of the value key.
+    // For example, the following is a key-value pair that specifies a link with the text “Edit my profile”:
+    // ”attributedValue”: “<a href=’http://example.com/customers/123’>Edit my profile</a>”
+    // The attributed value isn’t used for watchOS; use the value field instead.
+    optional string attributed_value = 4;
+
+    // A format string for the alert text to display when the pass updates. The format string needs to contain
+    // the escape %@, which the field’s new value replaces. For example, Gate changed to %@.
+    // You need to provide a value for the system to show a change notification.
+    // This field isn’t used for watchOS.
+    optional string change_message = 5;
+
+    // The data detectors to apply to the value of a field on the back of the pass. The default is to apply all
+    // data detectors. To use no data detectors, specify an empty array. You don’t use data detectors for fields on
+    // the front of the pass.
+    repeated PassDataDetectorType data_detector_types = 6;
+
+    // The alignment for the content of a field. The default is natural alignment, which aligns the text based on
+    // its script direction. This key is invalid for primary and back fields.
+    optional PassTextAlignment text_alignment = 7;
+
+    // The style of the date to display in the field.
+    optional PassDateTimeFormat date_style = 8;
+
+    // The style of the time displayed in the field.
+    optional PassDateTimeFormat time_style = 9;
+
+    // A Boolean value that controls the time zone for the time and date to display in the field. The default
+    // value is false, which displays the time and date using the current device’s time zone. Otherwise, the
+    // time and date appear in the time zone associated with the date and time of value.
+    // This key doesn’t affect the pass relevance calculation.
+    optional bool ignores_time_zone = 10;
+
+    // A Boolean value that controls whether the date appears as a relative date. The default value is false,
+    // which displays the date as an absolute date.
+    // This key doesn’t affect the pass relevance calculation.
+    optional bool is_relative = 11;
+
+    // The style of the number to display in the field. Formatter styles have the same meaning as the formats with
+    // corresponding names in NumberFormatter.Style.
+    optional PassNumberFormat number_style = 12;
+
+    // The currency code to use for the value of the field.
+    optional string currency_code = 13;
+}

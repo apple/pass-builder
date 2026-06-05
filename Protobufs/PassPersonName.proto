@@ -1,0 +1,37 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// A message that represents a person's name.
+message PassPersonName {
+    // The prefix for the person’s name, such as “Dr”.
+    string name_prefix = 1;
+
+    // The person’s given name; also called the forename or first name in some countries.
+    string given_name = 2;
+
+    // The person’s middle name.
+    string middle_name = 3;
+
+    // The person’s family name or last name.
+    string family_name = 4;
+
+    // The suffix for the person’s name, such as “Junior”.
+    string name_suffix = 5;
+
+    // The person’s nickname.
+    string nickname = 6;
+
+    // The phonetic representation of the person’s name.
+    string phonetic_representation = 7;
+}

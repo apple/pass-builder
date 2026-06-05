@@ -1,0 +1,22 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// Data Detector Type Enum
+enum PassDataDetectorType {
+    DATA_DETECTOR_TYPE_UNSPECIFIED = 0;
+    DATA_DETECTOR_TYPE_PHONE_NUMBER = 1;
+    DATA_DETECTOR_TYPE_LINK = 2;
+    DATA_DETECTOR_TYPE_ADDRESS = 3;
+    DATA_DETECTOR_TYPE_CALENDAR_EVENT = 4;
+}

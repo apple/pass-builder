@@ -1,0 +1,389 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "PassLocation.proto";
+import "PassPersonName.proto";
+import "PassSeat.proto";
+import "google/protobuf/timestamp.proto";
+
+option swift_prefix = "PB";
+
+// A message that contains machine-readable metadata the system uses to offer a pass and suggest related actions.
+message PassSemantics {
+    // The level of admission the ticket provides, such as general admission or VIP.
+    optional string admission_level = 1;
+
+    // An abbreviation of the level of admission the ticket provides, such as GA or VIP.
+    optional string admission_level_abbreviation = 2;
+
+    // Additional ticket attributes that other tags or keys in the pass don't include.
+    optional string additional_ticket_attributes = 3;
+
+    // The name of the person the ticket grants admission to.
+    optional string attendee_name = 4;
+
+    // The long description of the entrance information.
+    optional string entrance_description = 5;
+
+    // The type of event.
+    optional EventType event_type = 6;
+
+    // The full name of the event, such as the title of a movie.
+    optional string event_name = 7;
+
+    // The date and time the event starts (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp event_start_date = 8;
+
+    // An object that provides information for the date and time the event starts.
+    optional EventDateInfo event_start_date_info = 9;
+
+    // The date and time the event ends (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp event_end_date = 10;
+
+    // An array of objects that represent the details for each seat at an event or on a transit journey.
+    repeated PassSeat seats = 11;
+
+    // A Boolean value that indicates whether tailgating is allowed at the event.
+    optional bool tailgating_allowed = 12;
+
+    // The date when the box office opens (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_box_office_open_date = 13;
+
+    // The date when the venue closes (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_close_date = 14;
+
+    // The date the doors to the venue open (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_doors_open_date = 15;
+
+    // The full name of the entrance, such as Gate A.
+    optional string venue_entrance = 16;
+
+    // The venue entrance door.
+    optional string venue_entrance_door = 17;
+
+    // The venue entrance gate.
+    optional string venue_entrance_gate = 18;
+
+    // The venue entrance portal.
+    optional string venue_entrance_portal = 19;
+
+    // The date the fan zone opens (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_fan_zone_open_date = 20;
+
+    // The date the gates to the venue open (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_gates_open_date = 21;
+
+    // An object that represents the geographic coordinates of the venue.
+    optional PassLocation venue_location = 22;
+
+    // The full name of the venue.
+    optional string venue_name = 23;
+
+    // The date when the venue opens (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_open_date = 24;
+
+    // The date the parking lots open (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp venue_parking_lots_open_date = 25;
+
+    // The phone number for inquiries about the venue's ticketed event.
+    optional string venue_phone_number = 26;
+
+    // The name of the city or hosting region of the venue.
+    optional string venue_region_name = 27;
+
+    // The full name of the room where the ticketed event is to take place.
+    optional string venue_room = 28;
+
+    // MARK: - Sports Events
+
+    // The unique abbreviation of the away team's name.
+    optional string away_team_abbreviation = 29;
+
+    // The home location of the away team.
+    optional string away_team_location = 30;
+
+    // The name of the away team.
+    optional string away_team_name = 31;
+
+    // The unique abbreviation of the home team's name.
+    optional string home_team_abbreviation = 32;
+
+    // The home location of the home team.
+    optional string home_team_location = 33;
+
+    // The name of the home team.
+    optional string home_team_name = 34;
+
+    // The abbreviated league name for a sports event.
+    optional string league_abbreviation = 35;
+
+    // The unabbreviated league name for a sports event.
+    optional string league_name = 36;
+
+    // The commonly used name of the sport.
+    optional string sport_name = 37;
+
+    // MARK: - Live Performances
+
+    // The genre of the performance, such as classical.
+    optional string genre = 38;
+
+    // An array of the Apple Music persistent ID for each album.
+    repeated string album_ids = 39;
+
+    // An array of the Apple Music persistent ID for each artist performing at the event.
+    repeated string artist_ids = 40;
+
+    // An array of the full names of the performers and opening acts at the event.
+    repeated string performer_names = 41;
+
+    // An array of the Apple Music persistent ID for each playlist.
+    repeated string playlist_ids = 42;
+
+    // MARK: - Boarding Passes
+
+    // The IATA airline code, such as EX for flightCode EX123.
+    optional string airline_code = 43;
+
+    // A MapKit Place ID that references the airline lounge location.
+    optional string airline_lounge_place_id = 44;
+
+    // A list of airline specific capabilities the passenger has.
+    repeated string airline_passenger_capabilities = 45;
+
+    // A group number for boarding.
+    optional string boarding_group = 46;
+
+    // A zone number for boarding. Don't include the word 'zone'.
+    optional string boarding_zone = 47;
+
+    // A sequence number for boarding.
+    optional string boarding_sequence_number = 48;
+
+    // The number of the passenger car (train car/carriage/wagon/coach/bogie).
+    optional string car_number = 49;
+
+    // A booking or reservation confirmation number.
+    optional string confirmation_number = 50;
+
+    // The updated date and time of arrival (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp current_arrival_date = 51;
+
+    // The updated date and time of boarding (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp current_boarding_date = 52;
+
+    // The updated departure date and time (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp current_departure_date = 53;
+
+    // The IATA airport code for the departure airport, such as MPM or LHR.
+    optional string departure_airport_code = 54;
+
+    // The full name of the departure airport, such as Maputo International Airport.
+    optional string departure_airport_name = 55;
+
+    // A list of security programs that exist in the departure airport.
+    repeated string departure_airport_security_programs = 56;
+
+    // The time zone for the destination location, such as America/Los_Angeles.
+    optional string departure_airport_time_zone = 57;
+
+    // The name of the destination city to display on the boarding pass.
+    optional string departure_city_name = 58;
+
+    // The gate number or letters of the departure gate, such as 1A.
+    optional string departure_gate = 59;
+
+    // An object that represents the geographic coordinates of the transit departure location.
+    optional PassLocation departure_location = 60;
+
+    // A brief description of the departure location.
+    optional string departure_location_description = 61;
+
+    // The name of the departure platform, such as A.
+    optional string departure_platform = 62;
+
+    // The name of the departure station, such as 1st Street Station.
+    optional string departure_station_name = 63;
+
+    // The name or letter of the departure terminal, such as A.
+    optional string departure_terminal = 64;
+
+    // The IATA airport code for the destination airport, such as MPM or LHR.
+    optional string destination_airport_code = 65;
+
+    // The full name of the destination airport, such as London Heathrow.
+    optional string destination_airport_name = 66;
+
+    // A list of security programs that exist in the destination airport.
+    repeated string destination_airport_security_programs = 67;
+
+    // The time zone for the destination airport, such as America/Los_Angeles.
+    optional string destination_airport_time_zone = 68;
+
+    // The name of the destination city to display on the boarding pass.
+    optional string destination_city_name = 69;
+
+    // The gate number or letter of the destination gate, such as 1A.
+    optional string destination_gate = 70;
+
+    // An object that represents the geographic coordinates of the transit destination location.
+    optional PassLocation destination_location = 71;
+
+    // A brief description of the destination location.
+    optional string destination_location_description = 72;
+
+    // The name of the destination platform, such as A.
+    optional string destination_platform = 73;
+
+    // The name of the destination station, such as 1st Street Station.
+    optional string destination_station_name = 74;
+
+    // The terminal name or letter of the destination terminal, such as A.
+    optional string destination_terminal = 75;
+
+    // The duration of the event or transit journey, in seconds.
+    optional int32 duration = 76;
+
+    // The IATA flight code, such as EX123.
+    optional string flight_code = 77;
+
+    // The numeric portion of the IATA flight code, such as 123 for flightCode EX123.
+    optional int32 flight_number = 78;
+
+    // A boolean that indicates whether the passenger's international documents are verified.
+    optional bool international_documents_are_verified = 79;
+
+    // The name of the declaration given once the passenger's international documents are verified.
+    optional string international_documents_verified_declaration_name = 80;
+
+    // The name of a frequent flyer or loyalty program.
+    optional string membership_program_name = 81;
+
+    // The ticketed passenger's frequent flyer or loyalty number.
+    optional string membership_program_number = 82;
+
+    // The originally scheduled date and time of boarding (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp original_boarding_date = 83;
+
+    // The originally scheduled date and time of departure (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp original_departure_date = 84;
+
+    // The originally scheduled date and time of arrival (Unix timestamp in seconds).
+    optional google.protobuf.Timestamp original_arrival_date = 85;
+
+    // An array of airline-specific SSRs that apply to the ticketed passenger.
+    repeated string passenger_airline_ssrs = 86;
+
+    // An array of IATA information SSRs that apply to the ticketed passenger.
+    repeated string passenger_information_ssrs = 87;
+
+    // An object that represents the name of the passenger.
+    optional PassPersonName passenger_name = 88;
+
+    // An array of IATA SSRs that apply to the ticketed passenger.
+    repeated string passenger_service_ssrs = 89;
+
+    // A list of security programs the passenger supports.
+    repeated string passenger_eligible_security_programs = 90;
+
+    // The priority status the ticketed passenger holds, such as Gold or Silver.
+    optional string priority_status = 91;
+
+    // The type of security screening for the ticketed passenger, such as Priority.
+    optional string security_screening = 92;
+
+    // A localizable string that denotes the ticket class, such as Saver, Economy, First.
+    optional string ticket_fare_class = 93;
+
+    // The name of the transit company.
+    optional string transit_provider = 94;
+
+    // A brief description of the current boarding status for the vessel, such as On Time or Delayed.
+    optional string transit_status = 95;
+
+    // A brief description that explains the reason for the current transit status.
+    optional string transit_status_reason = 96;
+
+    // The name of the vehicle to board, such as the name of a boat.
+    optional string vehicle_name = 97;
+
+    // The identifier of the vehicle to board, such as the aircraft registration number or train number.
+    optional string vehicle_number = 98;
+
+    // A brief description of the type of vehicle to board.
+    optional string vehicle_type = 99;
+
+    // MARK: - Store Cards
+
+    // The current balance redeemable with the pass.
+    optional CurrencyAmount balance = 100;
+
+    // MARK: - General
+
+    // A Boolean value that determines whether the person's device remains silent during an event or transit journey.
+    optional bool silence_requested = 101;
+
+    // The total price for the pass.
+    optional CurrencyAmount total_price = 102;
+
+    // An array of objects that represent the Wi-Fi networks associated with the event.
+    repeated WifiNetwork wifi_access = 103;
+
+    // The type of event
+    enum EventType {
+        EVENT_TYPE_UNSPECIFIED = 0;
+        EVENT_TYPE_GENERIC = 1;
+        EVENT_TYPE_LIVE_PERFORMANCE = 2;
+        EVENT_TYPE_MOVIE = 3;
+        EVENT_TYPE_SPORTS = 4;
+        EVENT_TYPE_CONFERENCE = 5;
+        EVENT_TYPE_CONVENTION = 6;
+        EVENT_TYPE_WORKSHOP = 7;
+        EVENT_TYPE_SOCIAL_GATHERING = 8;
+    }
+
+    // An object that represents a date for an event
+    message EventDateInfo {
+        // The date.
+        string date = 1;
+
+        // A Boolean value that indicates whether the system ignores the time components of the date.
+        bool ignore_time_components = 2;
+
+        // The time zone to display in the date.
+        string time_zone = 3;
+
+        // A Boolean value that indicates whether the date of the event is announced.
+        bool unannounced = 4;
+
+        // A Boolean value that indicates whether the date of the event is determined.
+        bool undetermined = 5;
+    }
+
+    // An object that represents an amount of money and type of currency
+    message CurrencyAmount {
+        // The amount of money.
+        string amount = 1;
+
+        // The currency code for amount. ISO 4217 currency code as a string.
+        string currency_code = 2;
+    }
+
+    // An object that contains information required to connect to a WiFi network
+    message WifiNetwork {
+        // (Required) The name for the WiFi network.
+        string ssid = 1;
+
+        // (Required) The password for the WiFi network.
+        string password = 2;
+    }
+}

@@ -1,0 +1,27 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "PassImageFile.proto";
+
+option swift_prefix = "PB";
+
+// A collection of images at varying scale factors, representing a single logical image in a pass.
+message PassImageSet {
+    // The 1x scale image.
+    optional PassImageFile times1 = 1;
+
+    // The 2x scale image.
+    optional PassImageFile times2 = 2;
+
+    // The 3x scale image.
+    optional PassImageFile times3 = 3;
+}

@@ -1,0 +1,20 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// An image file within a pass package.
+// Use `PassImageFile` to configure individual image assets (such as icons and logos) in a pass package.
+message PassImageFile {
+    // (Required) The path to the image asset.
+    string image_path = 1;
+}

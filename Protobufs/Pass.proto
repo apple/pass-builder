@@ -1,0 +1,267 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "PassColor.proto";
+import "PassBarcode.proto";
+import "PassBeacon.proto";
+import "PassFields.proto";
+import "PassLocation.proto";
+import "PassNFC.proto";
+import "PassRelevantDate.proto";
+import "PassSemantics.proto";
+import "PassAction.proto";
+import "UpcomingPassInformationEntry.proto";
+import "google/protobuf/timestamp.proto";
+
+option swift_prefix = "PB";
+
+// A message that represents a pass.
+message Pass {
+    reserved 1;
+
+    // (Required) An alphanumeric serial number. The combination of the serial number and pass type identifier
+    // needs to be unique for each pass.
+    string serial_number = 2;
+
+    // The URL for a web service that you use to update or personalize the pass. The URL can include an optional
+    // port number.
+    optional string web_service_url = 3;
+
+    // The authentication token to use with the web service in the webServiceURL key.
+    optional string authentication_token = 4;
+
+    // The pass type identifier that’s registered with Apple. The value needs to be the same as the distribution
+    // certificate that signs the pass.
+    // Required if not specified in the associated pkpasstemplate.
+    optional string pass_type_identifier = 5;
+
+    // The Team ID for the Apple Developer Program account that registered the pass type identifier.
+    // Required if not specified in the associated pkpasstemplate.
+    optional string team_identifier = 6;
+
+    // The name of the organization.
+    // Required if not specified in the associated pkpasstemplate.
+    optional string organization_name = 7;
+
+    // A short description that iOS accessibility technologies use for a pass.
+    // Required if not specified in the associated pkpasstemplate.
+    optional string description = 8;
+
+    // A Boolean value introduced in iOS 11 that controls whether to show the Share button on the back of a pass.
+    // A value of true removes the button. The default value is false. This flag has no effect in earlier versions
+    // of iOS, nor does it prevent sharing the pass in some other way.
+    optional bool sharing_prohibited = 9;
+
+    // The fields of a pass.
+    optional PassFields fields = 11;
+
+    // An array of App Store identifiers for apps associated with the pass. The associated app on a device is the
+    // first item in the array that’s compatible with that device. A link to launch the app is on the back of the
+    // pass. If the app isn’t installed, the link opens the App Store.
+    repeated int32 associated_store_identifiers = 12;
+
+    // An array of additional App Store identifiers for apps associated with the pass. The associated app on a device
+    // is the first item in the array that’s compatible with that device. This key works only for poster event tickets.
+    // A link to launch the app is in the event guide of the pass. If the app isn’t installed, the link opens the
+    // App Store.
+    repeated int32 auxiliary_store_identifiers = 13;
+
+    // The date and time the pass expires.
+    optional google.protobuf.Timestamp expiration_date = 14;
+
+    // A Boolean value that indicates that the pass is void, such as a redeemed, one-time-use coupon.
+    // The default value is false.
+    optional bool voided = 15;
+
+    // An array of message that represent possible barcodes on a pass. The system uses the first displayable barcode
+    // for the device.
+    repeated PassBarcode barcodes = 16;
+
+    // The maximum distance, in meters, from a location in the locations array at which the pass is relevant.
+    // The system uses the smaller of this distance or the default distance.
+    optional double max_distance = 17;
+
+    // The date and time when the pass becomes relevant, as a W3C timestamp, such as the start time of a movie.
+    // The value needs to be a complete date that includes hours and minutes, and may optionally include seconds.
+    optional google.protobuf.Timestamp relevant_date = 18;
+
+    // An array of objects that represent date intervals that the system uses to show a relevant pass.
+    repeated PassRelevantDate relevant_dates = 19;
+
+    // An array of up to 10 objects that represent geographic locations the system uses to show a relevant pass.
+    repeated PassLocation locations = 20;
+
+    // An array of objects that represent the identity of Bluetooth Low Energy beacons the system uses to show a
+    // relevant pass.
+    repeated PassBeacon beacons = 21;
+
+    // A background color for the pass.
+    optional PassColor background_color = 22;
+
+    // A foreground color for the pass.
+    optional PassColor foreground_color = 23;
+
+    // A color for the label text of the pass. If you don’t provide a value, the system determines the label color.
+    optional PassColor label_color = 24;
+
+    // A strip color for the pass.
+    optional PassColor strip_color = 25;
+
+    // A background color for the footer of the pass.
+    // This key works only for poster event tickets.
+    optional PassColor footer_background_color = 26;
+
+    // A Boolean value that controls whether to display the header darkening gradient on poster event tickets.
+    // The default value is false.
+    // This key works only for poster event tickets.
+    optional bool suppress_header_darkening = 27;
+
+    // A Boolean value that controls whether Wallet computes the foreground and label color that the pass uses.
+    // The system derives the background color from the background image of the pass.
+    // This key works only for poster event tickets.
+    // This key ignores the values that foregroundColor and labelColor specify.
+    optional bool use_automatic_colors = 28;
+
+    // The text to display next to the logo on the pass.
+    // This key works only for poster event tickets.
+    optional string event_logo_text = 29;
+
+    // The text to display next to the logo on the pass.
+    // This key doesn’t work for poster event tickets.
+    optional string logo_text = 30;
+
+    // An identifier the system uses to group related boarding passes or event tickets.
+    // Wallet displays passes with the same groupingIdentifier, passTypeIdentifier, and type as a group.
+    // Use this identifier to group passes that are tightly related, such as boarding passes for different
+    // connections on the same trip.
+    optional string grouping_identifier = 31;
+
+    reserved 32;
+
+    // An object that contains the information to use for Value-Added Services protocol transactions.
+    optional PassNFC nfc = 33;
+
+    // An array of schemes to validate the pass with. The system validates the pass and its contents to ensure they
+    // meet the schemes’ requirements, falling back to the designed type if validation fails for all the
+    // provided schemes.
+    repeated string preferred_style_schemes = 34;
+
+    // An object that contains machine-readable metadata the system uses to offer a pass and suggest related actions.
+    optional PassSemantics semantics = 35;
+
+    // A URL the system passes to the associated app from associatedStoreIdentifiers during launch.
+    optional string app_launch_url = 36;
+
+    // A URL for management.
+    optional string management_url = 37;
+
+    // A URL that links to your accessiblity content, or the venue’s.
+    // This key works only for poster event tickets.
+    optional string accessibility_url = 38;
+
+    // A URL that can link to experiences that someone can add to the pass.
+    // This key works only for poster event tickets.
+    optional string add_on_url = 39;
+
+    // A URL that links to the bag policy of the venue for the event that the pass represents.
+    // This key works only for poster event tickets.
+    optional string bag_policy_url = 40;
+
+    // A URL that links to a site for ordering merchandise for the event that the pass represents.
+    // This key works only for poster event tickets.
+    optional string merchandise_url = 41;
+
+    // A URL that links to the food ordering page for the event that the pass represents.
+    // This key works only for poster event tickets.
+    optional string order_food_url = 42;
+
+    // A URL that links to parking information for the event that the pass represents.
+    // This key works only for poster event tickets.
+    optional string parking_information_url = 43;
+
+    // A URL that links to a site to purchase parking for the event that the pass represents.
+    // This key works only for poster event tickets.
+    optional string purchase_parking_url = 44;
+
+    // A URL that links to the selling flow for the ticket the pass represents.
+    // This key works only for poster event tickets.
+    optional string sell_url = 45;
+
+    // A URL that links to the transferring flow for the ticket that the pass represents.
+    // This key works only for poster event tickets.
+    optional string transfer_url = 46;
+
+    // A URL that links to information about transit options in the area of the event that the pass represents.
+    // This key works only for poster event tickets.
+    optional string transit_information_url = 47;
+
+    // The preferred email address to contact the venue, event, or issuer.
+    // This key works only for poster event tickets.
+    optional string contact_venue_email = 48;
+
+    // The phone number for contacting the venue, event, or issuer.
+    // This key works only for poster event tickets.
+    optional string contact_venue_phone_number = 49;
+
+    // A URL that links to the website of the venue, event, or issuer.
+    // This key works only for poster event tickets.
+    optional string contact_venue_website = 50;
+
+    // A URL that links to directions for the event.
+    // This key works only for poster event tickets.
+    optional string directions_information_url = 51;
+
+    // A URL for changing the seat for the ticket.
+    optional string change_seat_url = 52;
+
+    // A URL for in-flight entertainment.
+    optional string entertainment_url = 53;
+
+    // A URL for adding checked bags for the ticket.
+    optional string purchase_additional_baggage_url = 54;
+
+    // A URL that links to information to purchase lounge access.
+    optional string purchase_lounge_access_url = 55;
+
+    // A URL for purchasing in-flight wifi.
+    optional string purchase_wifi_url = 56;
+
+    // A URL for upgrading the flight.
+    optional string upgrade_url = 57;
+
+    // A URL for registering a service animal.
+    optional string register_service_animal_url = 58;
+
+    // A URL to report a lost bag.
+    optional string report_lost_bag_url = 59;
+
+    // A URL to request a wheel chair.
+    optional string request_wheelchair_url = 60;
+
+    // The email for the transit provider.
+    optional string transit_provider_email = 61;
+
+    // The phone number for the transit provider.
+    optional string transit_provider_phone_number = 62;
+
+    // The URL for the transit provider.
+    optional string transit_provider_website_url = 63;
+
+    // An ordered list of all upcoming pass information entries.
+    repeated UpcomingPassInformationEntry upcoming_pass_information = 64;
+
+    // An array of featured actions.
+    repeated PassAction featured_actions = 65;
+
+    // An SF Symbol to display as a logo image.
+    optional string logo_symbol_name = 66;
+}

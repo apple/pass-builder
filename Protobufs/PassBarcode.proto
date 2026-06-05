@@ -1,0 +1,45 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// A message that represents a barcode on a pass.
+message PassBarcode {
+    // (Required) The format of the barcode.
+    // The barcode format PKBarcodeFormatCode128 isn’t supported for watchOS.
+    PassBarcodeFormat format = 1;
+
+    // (Required) The message or payload to display as a barcode.
+    string message = 2;
+
+    // (Required) The IANA character set name of the text encoding to use to convert message from a string
+    // representation to a data representation that the system renders as a barcode, such as “iso-8859-1”.
+    string message_encoding = 3;
+
+    // The text to display near the barcode. For example, a human-readable version of the barcode data in case
+    // the barcode doesn’t scan.
+    // The alternative text isn’t displayed for watchOS.
+    optional string alt_text = 4;
+}
+
+// Barcode Format Enum
+enum PassBarcodeFormat {
+    BARCODE_FORMAT_UNSPECIFIED = 0;
+    BARCODE_FORMAT_QR = 1;
+    BARCODE_FORMAT_PDF417 = 2;
+    BARCODE_FORMAT_AZTEC = 3;
+    BARCODE_FORMAT_CODE128 = 4;
+    BARCODE_FORMAT_EAN13 = 5;
+    BARCODE_FORMAT_CODABAR = 6;
+    BARCODE_FORMAT_CODE39 = 7;
+    BARCODE_FORMAT_I2OF5 = 8;
+}

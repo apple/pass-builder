@@ -1,0 +1,35 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "google/protobuf/timestamp.proto";
+
+option swift_prefix = "PB";
+
+// Represents a value for a field in a pass.
+message PassFieldValue {
+    oneof value {
+        // Plain text value for simple string fields.
+        string value_text = 1;
+        
+        // Attributed text that may contain HTML formatting.
+        string value_attributed_text = 2;
+        
+        // Timestamp/date value for date fields.
+        google.protobuf.Timestamp value_date = 3;
+        
+        // Integer value for numeric fields.
+        int64 value_int = 4;
+        
+        // Floating-point value for numeric fields requiring decimal precision.
+        double value_double = 5;
+    }
+}

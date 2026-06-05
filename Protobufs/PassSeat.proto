@@ -1,0 +1,45 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "PassColor.proto";
+
+option swift_prefix = "PB";
+
+// A message that represents the identification of a seat for a transit journey or an event.
+message PassSeat {
+    // A description of the seat, such as A flat bed seat.
+    string seat_description = 1;
+
+    // The identifier code for the seat.
+    string seat_identifier = 2;
+
+    // The number of the seat.
+    string seat_number = 3;
+
+    // The row that contains the seat.
+    string seat_row = 4;
+
+    // The section that contains the seat.
+    string seat_section = 5;
+
+    // The aisle that contains the seat.
+    string seat_aisle = 6;
+
+    // The level that contains the seat.
+    string seat_level = 7;
+
+    // The type of seat, such as Reserved seating.
+    string seat_type = 8;
+
+    // A color associated with identifying the seat
+    PassColor seat_section_color = 9;
+}

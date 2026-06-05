@@ -1,0 +1,22 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// Text Alignment Enum
+enum PassTextAlignment {
+    TEXT_ALIGNMENT_UNSPECIFIED = 0;
+    TEXT_ALIGNMENT_LEFT = 1;
+    TEXT_ALIGNMENT_CENTER = 2;
+    TEXT_ALIGNMENT_RIGHT = 3;
+    TEXT_ALIGNMENT_NATURAL = 4;
+}

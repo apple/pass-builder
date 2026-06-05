@@ -1,0 +1,29 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// A message that represents a location that the system uses to show a relevant pass.
+message PassLocation {
+    // (Required) The latitude, in degrees, of the location.
+    double latitude = 1;
+
+    // (Required) The longitude, in degrees, of the location.
+    double longitude = 2;
+
+    // The altitude, in meters, of the location.
+    optional double altitude = 3;
+
+    // The text to display on the lock screen when the pass is relevant. For example, a description of a
+    // nearby location, such as “Store nearby on 1st and Main”.
+    optional string relevant_text = 4;
+}

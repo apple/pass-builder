@@ -1,0 +1,23 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// Date/Time Format Enum
+enum PassDateTimeFormat {
+    DATE_TIME_FORMAT_UNSPECIFIED = 0;
+    DATE_TIME_FORMAT_NONE = 1;
+    DATE_TIME_FORMAT_SHORT = 2;
+    DATE_TIME_FORMAT_MEDIUM = 3;
+    DATE_TIME_FORMAT_LONG = 4;
+    DATE_TIME_FORMAT_FULL = 5;
+}

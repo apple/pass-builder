@@ -1,0 +1,23 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+option swift_prefix = "PB";
+
+// Number Format Enum
+enum PassNumberFormat {
+    NUMBER_FORMAT_UNSPECIFIED = 0;
+    NUMBER_FORMAT_DECIMAL = 1;
+    NUMBER_FORMAT_PERCENT = 2;
+    NUMBER_FORMAT_SCIENTIFIC = 3;
+    NUMBER_FORMAT_SPELL_OUT = 4;
+}
+

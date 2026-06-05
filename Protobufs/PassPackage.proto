@@ -1,0 +1,49 @@
+//
+// This source file is part of the Pass Builder open source project
+//
+// Copyright (c) 2026 Apple Inc. and the Pass Builder project authors
+// Licensed under Apache License v2.0.
+//
+// See LICENSE.txt for license information
+//
+
+syntax = "proto3";
+package pass;
+
+import "Pass.proto";
+import "PassImageSet.proto";
+
+option swift_prefix = "PB";
+
+// A message that represents a pass.
+message PassPackage {
+    // A representation of the `pass.json`.
+    Pass pass = 1;
+
+    // The background image displayed behind the pass content.
+    optional PassImageSet background = 2;
+
+    // The artwork image for poster event tickets.
+    optional PassImageSet artwork = 3;
+
+    // The footer image displayed at the bottom of the pass.
+    optional PassImageSet footer = 4;
+
+    // The pass icon.
+    optional PassImageSet icon = 5;
+
+    // The logo image displayed on the top of the pass.
+    optional PassImageSet logo = 6;
+
+    // The primary logo displayed on the top of poster passes.
+    optional PassImageSet primaryLogo = 7;
+
+    // The secondary logo on some poster passes.
+    optional PassImageSet secondaryLogo = 8;
+
+    // The strip image displayed across the pass.
+    optional PassImageSet strip = 9;
+
+    // The thumbnail image for the pass.
+    optional PassImageSet thumbnail = 10;
+}
