@@ -40,15 +40,15 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/swiftlang/swift-subprocess", exact: Version("0.4.0")),
-        .package(url: "https://github.com/swiftlang/swift-syntax", exact: Version("603.0.1")),
-        .package(url: "https://github.com/apple/swift-argument-parser", exact: Version("1.6.1")),
-        .package(url: "https://github.com/apple/swift-system", exact: Version("1.6.4")),
-        .package(url: "https://github.com/apple/swift-crypto", exact: Version("3.14.0")),
-        .package(url: "https://github.com/apple/swift-protobuf", exact: Version("1.37.0")),
-        .package(url: "https://github.com/apple/swift-certificates", exact: Version("1.19.1")),
-        .package(url: "https://github.com/apple/swift-nio-ssl", exact: Version("2.36.1")),
-        .package(url: "https://github.com/apple/swift-docc-plugin", exact: Version("1.4.0"))
+        .package(url: "https://github.com/swiftlang/swift-subprocess", from: "0.4.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax", "603.0.1"..<"605.0.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.1"),
+        .package(url: "https://github.com/apple/swift-system", from: "1.6.4"),
+        .package(url: "https://github.com/apple/swift-crypto", "3.14.0"..<"5.0.0"),
+        .package(url: "https://github.com/apple/swift-protobuf", from: "1.37.0"),
+        .package(url: "https://github.com/apple/swift-certificates", from: "1.19.1"),
+        .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.36.1"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.4.0")
     ],
     targets: [
         .target(
