@@ -51,7 +51,9 @@ func readCredential(prompt: String) throws -> String {
             #if canImport(Darwin)
             memset_s(ptr.baseAddress, ptr.count, 0, ptr.count)
             #else
-            explicit_bzero(ptr.baseAddress, ptr.count)
+            if let base = ptr.baseAddress {
+                explicit_bzero(base, ptr.count)
+            }
             #endif
         }
     }
