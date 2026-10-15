@@ -75,6 +75,16 @@ try await signer.signPass(
 )
 ```
 
+### Load certificates from memory
+
+Use `Data` to load PKCS#12 bundles and DER certificates directly from decoded
+configuration secrets without writing temporary files:
+
+```swift
+let passCertificate = try PassCertificate(data: p12Data, password: password)
+let wwdrCertificate = try PassCertificate(data: wwdrData)
+```
+
 ### Validate a pass
 
 ```swift
