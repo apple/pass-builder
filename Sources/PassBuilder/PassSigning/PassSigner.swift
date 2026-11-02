@@ -16,7 +16,7 @@ private let PKPassFileSuffix = "pkpass"
 /// Use `PassSigner` to cryptographically sign an unsigned pass directory
 /// with the appropriate pass and WWDR certificates, and generate a
 /// ready-to-distribute Apple Wallet pass.
-public struct PassSigner {
+public struct PassSigner: Sendable {
     /// The pass certificate, which corresponds to the `passTypeIdentifier` in `pass.json`.
     var passCertificate: PassCertificate
 
@@ -102,7 +102,7 @@ public struct PassSigner {
         if destination != nil {
             try workingURL.prepareForWriting(options: options)
             try workingURL.appendingPathExtension(PKPassFileSuffix).prepareForWriting(options: options)
-            try fileManager._copyItem(at: passURL, to: workingURL)
+            try FileManager.default._copyItem(at: passURL, to: workingURL)
         }
 
         try writeToolingVersion(to: workingURL)
@@ -128,7 +128,7 @@ public struct PassSigner {
         )
 
         // Clean up any working files when we exit.
-        defer { try? fileManager.removeItem(at: workingURL) }
+        defer { try? FileManager.default.removeItem(at: workingURL) }
 
         if options.contains(.zipOutput) {
             let passURL = try await compressBundle(at: workingURL)
@@ -152,7 +152,7 @@ public struct PassSigner {
         let toolingURL = packageURL.appendingPathComponent(toolingJSONFileName)
 
         var toolingVersion: Tooling
-        if fileManager.fileExists(atPath: toolingURL.path) {
+        if FileManager.default.fileExists(atPath: toolingURL.path) {
             let data = try Data(contentsOf: toolingURL)
             let decoder = PassJSONDecoder()
             toolingVersion = try decoder.decode(Tooling.self, from: data)
@@ -172,8 +172,6 @@ public struct PassSigner {
         try await zipper.run()
         return outputURL
     }
-
-    private var fileManager = FileManager.default
 }
 
 extension PassSigner {
