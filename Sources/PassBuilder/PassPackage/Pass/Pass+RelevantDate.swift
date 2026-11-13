@@ -21,5 +21,7 @@ public extension Pass {
 
         /// The date and time for the pass relevancy interval to begin.
         public var startDate: Date?
+
+        public init() {}
     }
 }
