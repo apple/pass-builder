@@ -29,5 +29,7 @@ public extension Pass.UpcomingPassInformationEntry {
 
         /// The time zone to adjust the date into. If omitted, the entry uses the current time zone of the device.
         public var timeZone: String?
+
+        public init() {}
     }
 }

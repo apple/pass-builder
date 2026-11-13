@@ -26,5 +26,7 @@ public extension Pass.Semantics {
 
         /// A Boolean value that indicates whether the date of the event is undetermined.
         public var undetermined: Bool?
+
+        public init() {}
     }
 }

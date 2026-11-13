@@ -18,5 +18,7 @@ public extension Pass.UpcomingPassInformationEntry {
 
         /// A Boolean value that indicates whether to use the local equivalent image instead of the image specified by URLs.
         public var reuseExisting: Bool?
+
+        public init() {}
     }
 }

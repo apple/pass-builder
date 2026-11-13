@@ -60,5 +60,7 @@ public extension Pass.UpcomingPassInformationEntry {
 
         /// A URL that links to documentation you have about public or private transit to the venue.
         public var transitInformationURL: String?
+
+        public init() {}
     }
 }

@@ -18,5 +18,7 @@ public extension Pass.UpcomingPassInformationEntry {
         /// The name of the image file used for the venue map in the event guide for each upcoming pass
         /// information entry. This can be a remote asset and is available for event entries.
         public var venueMap: Image?
+
+        public init() {}
     }
 }

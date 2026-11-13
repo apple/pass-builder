@@ -23,5 +23,7 @@ public extension Pass.UpcomingPassInformationEntry {
 
         /// Size of the image asset in bytes. The maximum allowed size is 2 megabytes.
         public var size: Int?
+
+        public init() {}
     }
 }

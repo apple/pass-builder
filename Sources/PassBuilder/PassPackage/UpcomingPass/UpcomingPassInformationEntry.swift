@@ -50,5 +50,7 @@ public extension Pass {
         /// (Required) The type of upcoming pass information entry.
         /// The only value currently supported is `event`.
         public var type: String?
+
+        public init() {}
     }
 }

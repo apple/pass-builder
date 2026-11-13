@@ -24,5 +24,7 @@ public extension Pass {
         /// The text to display on the lock screen when the pass is relevant. For example, a description of a
         /// nearby location, such as “Store nearby on 1st and Main”.
         public var relevantText: String?
+
+        public init() {}
     }
 }
