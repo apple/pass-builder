@@ -44,7 +44,7 @@ let package = Package(
         .package(url: "https://github.com/swiftlang/swift-syntax", "603.0.1"..<"605.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.1"),
         .package(url: "https://github.com/apple/swift-system", from: "1.6.4"),
-        .package(url: "https://github.com/apple/swift-crypto", "3.14.0"..<"5.0.0"),
+        .package(url: "https://github.com/apple/swift-crypto", "3.14.0"..<"6.0.0"),
         .package(url: "https://github.com/apple/swift-protobuf", from: "1.37.0"),
         .package(url: "https://github.com/apple/swift-certificates", from: "1.19.1"),
         .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.36.1"),
