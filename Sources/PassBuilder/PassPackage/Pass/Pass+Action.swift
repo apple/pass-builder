@@ -29,5 +29,7 @@ public extension Pass {
 
         /// The URL the action opens, if applicable.
         public var url: String?
+
+        public init() {}
     }
 }

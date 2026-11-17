@@ -17,5 +17,7 @@ public extension Pass.Semantics {
 
         /// The currency code for amount. ISO 4217 currency code as a string.
         public var currencyCode: String?
+
+        public init() {}
     }
 }
