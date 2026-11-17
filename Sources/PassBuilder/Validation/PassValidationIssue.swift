@@ -57,8 +57,10 @@ extension PassValidationIssue: CustomDebugStringConvertible {
 
 extension PassValidationIssue: Comparable {
     public static func < (lhs: PassValidationIssue, rhs: PassValidationIssue) -> Bool {
-        lhs.severity.rawValue < rhs.severity.rawValue &&
-        lhs.id < rhs.id
+        guard lhs.severity.rawValue == rhs.severity.rawValue else {
+            return lhs.severity.rawValue < rhs.severity.rawValue
+        }
+        return lhs.id < rhs.id
     }
 }
 
