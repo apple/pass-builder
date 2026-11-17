@@ -14,7 +14,7 @@ internal import SwiftASN1
 
 /// A certificate that signs or identifies a pass.
 ///
-/// `PassCertificate` loads certificates from PKCS#12 (`.p12`) and DER-encoded files.
+/// `PassCertificate` loads PKCS#12 (`.p12`) and DER-encoded certificates from files or in-memory data.
 public struct PassCertificate {
     /// The parsed certificate.
     public var certificate: Certificate
@@ -39,8 +39,22 @@ public struct PassCertificate {
         defer { certificateURL.stopAccessingSecurityScopedResource() }
         #endif
 
+        let data = try Data(contentsOf: certificateURL)
+        try self.init(data: data, password: password)
+    }
+
+    /// Creates a pass certificate from in-memory PKCS#12 or DER-encoded data.
+    ///
+    /// - Parameters:
+    ///   - data: The bytes of a PKCS#12 bundle or DER-encoded certificate.
+    ///   - password: The password for a PKCS#12 bundle, or `nil` if it isn't password-protected.
+    /// - Throws: ``PassSigningError/badPassword`` if the supplied password doesn't unlock the bundle,
+    ///   ``PassSigningError/certificateChainEmpty`` if the bundle contains no certificates, or
+    ///   ``PassSigningError/certificateInvalid`` if the data isn't a recognized PKCS#12 or DER certificate.
+    public init(data: Data, password: String? = nil) throws {
+        let bytes = Array(data)
         do {
-            let (certificate, pkcs12Bundle) = try Self.p12Certificate(from: certificateURL, password: password)
+            let (certificate, pkcs12Bundle) = try Self.p12Certificate(from: bytes, password: password)
             self.certificate = certificate
             self.pkcs12Bundle = pkcs12Bundle
             self.certificateType = .p12
@@ -52,7 +66,7 @@ public struct PassCertificate {
             }
         }
 
-        let derCert = try? Self.derCertificate(from: certificateURL)
+        let derCert = try? Certificate(derEncoded: bytes)
         if let derCert {
             certificate = derCert
             certificateType = .der
@@ -62,9 +76,9 @@ public struct PassCertificate {
         throw PassSigningError.certificateInvalid
     }
 
-    private static func p12Certificate(from url: URL, password: String?) throws -> (Certificate, NIOSSLPKCS12Bundle) {
+    private static func p12Certificate(from bytes: [UInt8], password: String?) throws -> (Certificate, NIOSSLPKCS12Bundle) {
         let passphrase = password.map { Array($0.utf8) }
-        let pkcs12Bundle = try NIOSSLPKCS12Bundle(file: url.path, passphrase: passphrase)
+        let pkcs12Bundle = try NIOSSLPKCS12Bundle(buffer: bytes, passphrase: passphrase)
 
         guard let nioSigningCert = pkcs12Bundle.certificateChain.first else {
             throw PassSigningError.certificateChainEmpty
@@ -72,12 +86,6 @@ public struct PassCertificate {
 
         let signingCert = try Certificate(derEncoded: nioSigningCert.toDERBytes())
         return (signingCert, pkcs12Bundle)
-    }
-
-    private static func derCertificate(from url: URL) throws -> Certificate {
-        let certificateData = try Data(contentsOf: url)
-        let certificate = try Certificate(derEncoded: Array(certificateData))
-        return certificate
     }
 }
 
