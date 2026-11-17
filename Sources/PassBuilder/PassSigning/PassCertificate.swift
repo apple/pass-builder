@@ -15,7 +15,7 @@ internal import SwiftASN1
 /// A certificate that signs or identifies a pass.
 ///
 /// `PassCertificate` loads certificates from PKCS#12 (`.p12`) and DER-encoded files.
-public struct PassCertificate {
+public struct PassCertificate: Sendable {
     /// The parsed certificate.
     public var certificate: Certificate
 
