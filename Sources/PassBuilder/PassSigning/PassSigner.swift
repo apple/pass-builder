@@ -127,10 +127,11 @@ public struct PassSigner: Sendable {
             originalContentsURL: nil
         )
 
-        // Clean up any working files when we exit.
-        defer { try? FileManager.default.removeItem(at: workingURL) }
-
         if options.contains(.zipOutput) {
+            // Clean up any working files when we exit. Without `.zipOutput` the working directory is the result,
+            // so it's kept.
+            defer { try? FileManager.default.removeItem(at: workingURL) }
+
             let passURL = try await compressBundle(at: workingURL)
             return passURL
         } else {
